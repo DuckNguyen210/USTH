@@ -6,20 +6,24 @@ import utils.DomainConstraint;
 import utils.NotPossibleException;
 import utils.OptType;
 
-/*
-@overview 
-PostgradStudent is a subclass of class Student
-
-@attributes
-gpa float
-
-@object 
-A typical PostgradStudent is a=(m,n,p,q,r) where id(m), name(n), phoneNum(p), address(q), gpa(r)
-
-@abstract_properties
-min(id)=100000001 /\ max(id)=1000000000
-mutable(gpa)=true /\ optional(gpa)=false /\ min(gpa)=0.0 /\ max(gpa)=4.0
-*/
+/**
+ * @overview 
+ * PostgradStudent is a subclass of class Student
+ *
+ * @attributes
+ * gpa float
+ *
+ * @object 
+ * A typical PostgradStudent is a=(m,n,p,q,r) where id(m), name(n), phoneNum(p), address(q), gpa(r)
+ *
+ * @abstract_properties
+ * min(id)=100000001 /\ max(id)=1000000000
+ * mutable(gpa)=true /\ optional(gpa)=false /\ min(gpa)=0.0 /\ max(gpa)=4.0
+ * 
+ * @author 
+ * BI12-099 Nguyen Thanh Duc
+ * 
+ */
 
 public class PostgradStudent extends Student {
     
@@ -30,6 +34,16 @@ public class PostgradStudent extends Student {
     
     @DomainConstraint(type = "Float", optional = false, min = MIN_GPA, max = MAX_GPA)
     private float gpa;
+    
+    // constructor methods
+	/**
+	 * @effect <pre>
+	 * 			if id, name, phoneNumber, address, gpa are valid
+	 * 				initialize this as PostgradStudent:<id, name, phoneNumber, address, gpa>
+	 * 			else
+	 * 				throws NotPossibleException
+	 * 			</pre>
+	 */
 
     public PostgradStudent(@AttrRef("id") int id, @AttrRef("name") String name,
 			@AttrRef("phoneNum") String phoneNum, @AttrRef("address") String address,
@@ -42,7 +56,22 @@ public class PostgradStudent extends Student {
 			this.gpa=gpa;
 		}
 	}
-
+    
+    // @effects return <tt>this.gpa</tt>
+    @DOpt(type=OptType.Observer) @AttrRef("gpa")
+    public float getGpa() {
+        return gpa;
+    }
+    
+    /**
+	 * @effects <pre>
+	 * 			if gpa is valid
+	 * 				set this.gpa = gpa
+	 * 				return true
+	 * 			else
+	 * 				return false
+	 * 			</pre>
+	 */
     public boolean setGpa(float gpa) {
         if (validateGpa(gpa)) {
             this.gpa = gpa;
@@ -51,16 +80,9 @@ public class PostgradStudent extends Student {
             return false;
         }
     }
-
-    // @effects return <tt>gpa</tt>
-    @DOpt(type=OptType.Observer) @AttrRef("gpa")
-    public String getGpa() {
-        return this.gpa;
-    }
     
-    @Override
 	@DomainConstraint(type="Integer", mutable=false, optional=false, min=MIN_ID, max=MAX_ID)
-    private boolean validateID(int id) {
+    protected boolean validateID(int id) {
         if (id < MIN_ID || id > MAX_ID) {
             return false;
         } else {
@@ -76,17 +98,7 @@ public class PostgradStudent extends Student {
         }
     }
     
-    @Override
-    public boolean repOk() {
-        if (super.repOK()) {
-			return validateGpa(gpa);
-		} else {
-			return false;
-	    }
-    }
-    
-    @Override
     public String toString() {
-        return String.format("PostgradStudent: <%d, %s, %s, %s, %f>", this.getId(), this.getName(), this.getPhoneNumber(), this.getAddress(), this.getGpa());
+        return String.format("Postgrad student: <%d, %s, %s, %s, %f>", this.getId(), this.getName(), this.getPhoneNum(), this.getAddress(), this.getGpa());
     }
 }
