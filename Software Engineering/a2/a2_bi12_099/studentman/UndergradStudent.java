@@ -47,7 +47,7 @@ public class UndergradStudent extends Student {
 	 * 			</pre>
 	 */
     public String toString() {
-        return String.format("Undergrad student: <%d, %s, %s, %s>",this.getId(),this.getName(),this.getphoneNumber(),this.getAddress());
+        return String.format("Undergrad student: <%d, %s, %s, %s>",this.getId(),this.getName(),this.getPhoneNumber(),this.getAddress());
     }
     
     /**
@@ -58,7 +58,6 @@ public class UndergradStudent extends Student {
 	 * 				return false
 	 * 			</pre>
 	 */
-	@Override
 	@DomainConstraint(type="Integer", mutable=false, optional=false, min=MIN_ID, max=MAX_ID)
     protected boolean validateID(int id) {
         if (id < MIN_ID || id > MAX_ID) {

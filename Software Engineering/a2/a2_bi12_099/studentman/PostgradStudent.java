@@ -124,7 +124,7 @@ public class PostgradStudent extends Student {
 	 * 			</pre>
 	 */
     public String toString() {
-        return String.format("Postgrad student: <%d, %s, %s, %s, %f>", this.getId(), this.getName(), this.getphoneNumber(), this.getAddress(), this.getGpa());   
+        return String.format("Postgrad student: <%d, %s, %s, %s, %f>", this.getId(), this.getName(), this.getPhoneNumber(), this.getAddress(), this.getGpa());   
     }
     
     /**
